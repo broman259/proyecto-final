@@ -11,7 +11,7 @@ class JornadaController extends Controller
      */
     public function index()
     {
-        //
+        return view('jornadas.index');
     }
 
     /**

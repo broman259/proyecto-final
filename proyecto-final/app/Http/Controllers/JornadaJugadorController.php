@@ -11,7 +11,8 @@ class JornadaJugadorController extends Controller
      */
     public function index()
     {
-        //
+        return view('punteos.index');
+
     }
 
     /**

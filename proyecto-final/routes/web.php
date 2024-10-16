@@ -16,12 +16,12 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::resource('/equipos', EquipoController::class);
-    Route::resource('/jornadas', JornadaController::class);
-    Route::resource('/jugadores', JugadorController::class);
-    Route::resource('/jornada-jugador', JornadaJugadorController::class);
-
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+    Route::resource('/equipos', EquipoController::class);
+    Route::resource('/jugadores', JugadorController::class);
+    Route::resource('/jornadas', JornadaController::class);
+    Route::resource('/punteos', JornadaJugadorController::class);
+
 });
