@@ -9,4 +9,6 @@ class Jornada extends Model
     public function jugadores(){
         return $this->belongsToMany(Jugador::class, 'jornada_jugador');
     }
+
+    protected $fillable = ['jornada'];
 }
