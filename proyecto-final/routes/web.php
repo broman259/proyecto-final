@@ -1,6 +1,11 @@
 <?php
 
+use App\Http\Controllers\EquipoController;
+use App\Http\Controllers\JornadaController;
+use App\Http\Controllers\JornadaJugadorController;
+use App\Http\Controllers\JugadorController;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -11,6 +16,11 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+    Route::resource('/equipos', EquipoController::class);
+    Route::resource('/jornadas', JornadaController::class);
+    Route::resource('/jugadores', JugadorController::class);
+    Route::resource('/jornada-jugador', JornadaJugadorController::class);
+
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
