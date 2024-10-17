@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jornada;
 use Illuminate\Http\Request;
+
 
 class JornadaController extends Controller
 {
@@ -11,7 +13,8 @@ class JornadaController extends Controller
      */
     public function index()
     {
-        return view('jornadas.index');
+        $jornadas = Jornada::paginate(10);
+        return view('jornadas.index', compact('jornadas'));
     }
 
     /**
@@ -19,7 +22,7 @@ class JornadaController extends Controller
      */
     public function create()
     {
-        //
+        return view(view: 'jornadas.crear');
     }
 
     /**
@@ -27,7 +30,16 @@ class JornadaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required', 
+        ]);
+
+        // dd($request->all());
+
+        $jornada = $request->all();
+
+        Jornada::create($jornada);
+        return redirect()->route('jornadas.index');
     }
 
     /**
@@ -41,24 +53,31 @@ class JornadaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Jornada $jornada)
     {
-        //
+        return view('jornadas.editar', compact('jornada'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Jornada $jornada)
     {
-        //
+        $request->validate([
+            'nombre' => 'required'
+        ]);
+
+        $jor = $request->all();
+        $jornada->update($jor);
+        return redirect()->route('jornadas.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Jornada $jornada)
     {
-        //
+        $jornada->delete();
+        return redirect()->route('jornadas.index');
     }
 }

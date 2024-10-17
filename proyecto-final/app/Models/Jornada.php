@@ -10,5 +10,5 @@ class Jornada extends Model
         return $this->belongsToMany(Jugador::class, 'jornada_jugador');
     }
 
-    protected $fillable = ['jornada'];
+    protected $fillable = ['nombre'];
 }

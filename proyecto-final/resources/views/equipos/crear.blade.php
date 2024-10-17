@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Crear Equipos') }}
+            {{ __('Crear Equipo') }}
         </h2>
     </x-slot>
 
@@ -19,12 +19,12 @@
                             <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Nombre del Equipo:</label>
                             <input name="nombre" class="py-2 px-3 rounded-lg border-2 border-slate-300 mt-1 focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent" type="text" required />
                         </div>
+                        <!-- Para ver la imagen seleccionada -->
+                        <div class="grid grid-cols-1 mt-5 mx-7">
+                            <img id="imagenSeleccionada" style="max-height: 200px;">
+                        </div>
                     </div>
 
-                    <!-- Para ver la imagen seleccionada -->
-                    <div class="grid grid-cols-1 mt-5 mx-7">
-                        <img id="imagenSeleccionada" style="max-height: 200px;">
-                    </div>
 
                     <div class="grid grid-cols-1 mt-5 mx-7">
                         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold mb-1">Subir Imagen</label>

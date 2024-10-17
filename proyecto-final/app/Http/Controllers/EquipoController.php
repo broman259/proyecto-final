@@ -13,7 +13,7 @@ class EquipoController extends Controller
      */
     public function index()
     {
-        $equipos = Equipo::paginate(5);
+        $equipos = Equipo::paginate(10);
         return view('equipos.index', compact('equipos'));
     }
 
