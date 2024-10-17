@@ -10,5 +10,5 @@ class Equipo extends Model
         return $this->hasMany(Jugador::class, 'id');
     }
 
-    protected $fillable = ['equipo', 'logo'];
+    protected $fillable = ['nombre', 'imagen'];
 }

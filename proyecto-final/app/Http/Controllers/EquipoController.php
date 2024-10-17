@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Equipo;
 use Illuminate\Http\Request;
+
 
 class EquipoController extends Controller
 {
@@ -11,7 +13,8 @@ class EquipoController extends Controller
      */
     public function index()
     {
-        return view('equipos.index');
+        $equipos = Equipo::paginate(5);
+        return view('equipos.index', compact('equipos'));
     }
 
     /**
@@ -19,7 +22,7 @@ class EquipoController extends Controller
      */
     public function create()
     {
-        //
+        return view('equipos.crear');
     }
 
     /**
@@ -27,7 +30,25 @@ class EquipoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required', 
+            'imagen' => 'required|image|mimes:jpeg,png,svg,jpg|max:1024'
+        ]);
+
+        // dd($request->all());
+
+
+        $equipo = $request->all();
+
+        if($imagen = $request->file('imagen')){
+            $rutaGuardarImg = 'imagen/';
+            $imagenEquipo = date('YmdHis') . "." . $imagen->getClientOriginalExtension();
+            $imagen->move(public_path($rutaGuardarImg), $imagenEquipo);
+            $equipo['imagen'] = $imagenEquipo;
+        }
+        
+        Equipo::create($equipo);
+        return redirect()->route('equipos.index');
     }
 
     /**
@@ -43,7 +64,7 @@ class EquipoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('equipos.editar', compact('equipo'));
     }
 
     /**
@@ -57,8 +78,9 @@ class EquipoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Equipo $equipo)
     {
-        //
+        $equipo->delete();
+        return redirect()->route('equipos.index');
     }
 }
