@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Jugador extends Model
 {
-    public function categorias(){
+    protected $table = 'jugadores';
+    public function equipo(){
         return $this->belongsTo(Equipo::class, 'equipo_id');
     }
 
@@ -14,5 +15,5 @@ class Jugador extends Model
         return $this->belongsToMany(Jornada::class, 'jornada_jugador');
     }
 
-    protected $fillable = ['nombre', 'apellido', 'fecha_nac', 'foto', 'equipo_id'];
+    protected $fillable = ['nombre', 'apellido', 'fecha_nac', 'imagen', 'equipo_id'];
 }

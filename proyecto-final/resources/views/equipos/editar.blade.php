@@ -57,7 +57,7 @@
 </x-app-layout>
 
 <!-- Script para ver la imagen antes de CREAR UN NUEVO EQUIPO -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>  -->
 <script>   
     $(document).ready(function (e) {   
         $('#imagen').change(function(){            

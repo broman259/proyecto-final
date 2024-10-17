@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Equipo;
+use App\Models\Jugador;
 use Illuminate\Http\Request;
 
 class JugadorController extends Controller
@@ -11,7 +13,8 @@ class JugadorController extends Controller
      */
     public function index()
     {
-        return view('jugadores.index');
+        $jugadores = Jugador::with('equipo')->paginate(10);
+        return view('jugadores.index', compact('jugadores'));
     }
 
     /**
@@ -19,7 +22,8 @@ class JugadorController extends Controller
      */
     public function create()
     {
-        //
+        $equipos = Equipo::all();
+        return view('jugadores.crear', compact('equipos'));
     }
 
     /**
@@ -27,7 +31,32 @@ class JugadorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'fecha_nac' => 'required',
+            'imagen' => 'required|image|mimes:jpeg,png,svg,jpg|max:1024',
+            'equipo_id' => 'required|exists:equipos,id'
+        ]);
+
+        $jugador = $request->all();
+
+        if($imagen = $request->file('imagen')){
+            $rutaGuardarImg = 'imagen/';
+            $imagenJugador = date('YmdHis') . "." . $imagen->getClientOriginalExtension();
+            $imagen->move(public_path($rutaGuardarImg), $imagenJugador);
+            $jugador['imagen'] = $imagenJugador;
+        }
+
+        Jugador::create($jugador);
+        return redirect()->route('jugadores.index');
+    
+        // $jugador = new Jugador();
+        // $jugador->nombre = $request->input('nombre');
+        // $jugador->equipo_id = $request->input('equipo_id'); // Asignar el equipo al jugador
+        // $jugador->save();
+        // return redirect()->route('jugadores.index')->with('success', 'Jugador registrado con éxito');
+
     }
 
     /**
@@ -41,9 +70,10 @@ class JugadorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Jugador $jugador)
     {
-        //
+        $equipos = Equipo::all();
+        return view('jugadores.editar', compact('jugador','equipos'));
     }
 
     /**
@@ -57,8 +87,9 @@ class JugadorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Jugador $jugador)
     {
-        //
+        $jugador->delete();
+        return redirect()->route('jugadores.index');
     }
 }
