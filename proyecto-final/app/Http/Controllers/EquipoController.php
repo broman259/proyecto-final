@@ -62,7 +62,7 @@ class EquipoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Equipo $equipo)
     {
         return view('equipos.editar', compact('equipo'));
     }
@@ -70,9 +70,24 @@ class EquipoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Equipo $equipo)
     {
-        //
+        $request->validate([
+            'nombre' => 'required'
+        ]);
+
+        $equ = $request->all();
+
+        if($imagen = $request->file('imagen')){
+            $rutaGuardarImg = 'imagen/';
+            $imagenEquipo = date('YmdHis') . "." . $imagen->getClientOriginalExtension();
+            $imagen->move(public_path($rutaGuardarImg), $imagenEquipo);
+            $equ['imagen'] = $imagenEquipo;
+        } else {
+            unset($equ['imagen']);
+        }
+        $equipo->update($equ);
+        return redirect()->route('equipos.index');
     }
 
     /**
