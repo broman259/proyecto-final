@@ -39,7 +39,6 @@
                             <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold">Asociar a un Equipo:</label>
 
                             <select name="equipo_id" id="equipo" class="form-control select2 py-2 px-3 rounded-lg border-2 border-slate-300 mt-1 focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent">
-                                <option value="">Selecciona un Equipo</option>
                                 @foreach ($equipos as $equipo)
                                 <option value="{{ $equipo->id }}" data-image="{{ asset('imagen/' . $equipo->imagen) }}">
                                     {{ $equipo->nombre }}

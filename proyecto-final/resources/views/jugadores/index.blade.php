@@ -142,7 +142,7 @@
                                                     class="relative px-4 py-3 select-none mx-1 rounded-lg text-center align-middle font-sans text-sm font-medium uppercase bg-slate-700 text-white transition-all hover:bg-slate-700/80 active:bg-slate-700/80"
                                                     type="button">Editar</a>
 
-                                                <form action="{{ route('jugadores.destroy', $jugador->id) }}" method="POST" class="formEliminar">
+                                                    <form action="{{ route('jugadores.destroy', $jugador->id) }}" method="POST" class="formEliminar">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button

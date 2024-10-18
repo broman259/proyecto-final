@@ -70,26 +70,46 @@ class JugadorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Jugador $jugador)
+    public function edit(Jugador $jugadore)
     {
+        // dd($jugadore);
         $equipos = Equipo::all();
-        return view('jugadores.editar', compact('jugador','equipos'));
+        return view('jugadores.editar', compact('jugadore','equipos'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Jugador $jugadore)
     {
-        //
+        $request->validate([
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'fecha_nac' => 'required'
+        ]);
+
+        $jug = $request->all();
+
+        if($imagen = $request->file('imagen')){
+            $rutaGuardarImg = 'imagen/';
+            $imagenJugador = date('YmdHis') . "." . $imagen->getClientOriginalExtension();
+            $imagen->move(public_path($rutaGuardarImg), $imagenJugador);
+            $jug['imagen'] = $imagenJugador;
+        } else {
+            unset($jug['imagen']);
+        }
+        $jugadore->update($jug);
+        return redirect()->route('jugadores.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Jugador $jugador)
+    public function destroy(Jugador $jugadore)
     {
-        $jugador->delete();
+        // dd($jugador);
+        // $jugador = Jugador::findOrFail($id);
+        $jugadore->delete();
         return redirect()->route('jugadores.index');
     }
 }
