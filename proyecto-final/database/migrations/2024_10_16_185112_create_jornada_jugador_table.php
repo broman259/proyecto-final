@@ -26,7 +26,7 @@ return new class extends Migration
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
             
-            $table->double('puntos');
+            $table->double('puntos_obtenidos');
             $table->string('tipo_tiro');
             $table->timestamps();
         });

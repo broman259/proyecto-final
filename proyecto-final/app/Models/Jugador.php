@@ -13,6 +13,8 @@ class Jugador extends Model
 
     public function jornadas(){
         return $this->belongsToMany(Jornada::class, 'jornada_jugador');
+
+        // return $this->hasMany(JornadaJugador::class, 'jugador_id');
     }
 
     protected $fillable = ['nombre', 'apellido', 'fecha_nac', 'imagen', 'equipo_id'];
