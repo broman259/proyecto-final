@@ -109,6 +109,12 @@ class JugadorController extends Controller
     {
         // dd($jugador);
         // $jugador = Jugador::findOrFail($id);
+        if($jugadore->imagen){
+            $rutaImagen = public_path('imagen/') . $jugadore->imagen;
+            if(file_exists($rutaImagen)){
+                unlink($rutaImagen);
+            }
+        }
         $jugadore->delete();
         return redirect()->route('jugadores.index');
     }

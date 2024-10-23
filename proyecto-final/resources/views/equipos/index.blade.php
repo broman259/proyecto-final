@@ -93,7 +93,9 @@
                                             <div class="w-max">
                                                 <div
                                                     class="relative grid items-center px-2 py-1 font-sans text-xs font-bold text-green-900 uppercase rounded-md select-none whitespace-nowrap bg-green-500/20">
-                                                    <span class="">{{$equipo->created_at}}</span>
+                                                    <span class="">
+                                                    {{ \Carbon\Carbon::parse($equipo->created_at)->setTimezone('America/Guatemala')->format('d/m/Y H:i:s') }}
+                                                    </span>
                                                 </div>
                                             </div>
                                         </td>
@@ -101,7 +103,9 @@
                                             <div class="w-max">
                                                 <div
                                                     class="relative grid items-center px-2 py-1 font-sans text-xs font-bold text-orange-900 uppercase rounded-md select-none whitespace-nowrap bg-orange-500/20">
-                                                    <span class="">{{$equipo->updated_at}}</span>
+                                                    <span class="">
+                                                    {{ \Carbon\Carbon::parse($equipo->updated_at)->setTimezone('America/Guatemala')->format('d/m/Y H:i:s') }}
+                                                    </span>
                                                 </div>
                                             </div>
                                         </td>

@@ -4,8 +4,8 @@ use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\JornadaController;
 use App\Http\Controllers\JornadaJugadorController;
 use App\Http\Controllers\JugadorController;
+use App\Http\Controllers\ReporteController;
 use Illuminate\Support\Facades\Route;
-
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,5 +23,14 @@ Route::middleware([
     Route::resource('/jugadores', JugadorController::class);
     Route::resource('/jornadas', JornadaController::class);
     Route::resource('/punteos', JornadaJugadorController::class);
+    Route::resource('/reportes', ReporteController::class);
+
+    Route::get('/reportes-jugadores-general', [ReporteController::class, 'jugadoresGeneral'])->name('reportes.jugadoresGeneral');
+    Route::get('/reportes-jugadores-equipo', [ReporteController::class, 'jugadoresequipo'])->name('reportes.jugadoresEquipo');
+
+    Route::get('/reportes-equipos', [ReporteController::class, 'equipos'])->name('reportes.equipos');
+
+    Route::get('/reportes-maximos-anotadores', [ReporteController::class, 'maximosAnotadores'])->name('reportes.maximosAnotadores');
+
 
 });

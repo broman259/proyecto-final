@@ -123,7 +123,9 @@
                                             <div class="w-max">
                                                 <div
                                                     class="relative grid items-center px-2 py-1 font-sans text-xs font-bold text-green-900 uppercase rounded-md select-none whitespace-nowrap bg-green-500/20">
-                                                    <span class="">{{$jugador->created_at}}</span>
+                                                    <span class="">
+                                                        {{ \Carbon\Carbon::parse($jugador->created_at)->setTimezone('America/Guatemala')->format('d/m/Y H:i:s') }}
+                                                    </span>
                                                 </div>
                                             </div>
                                         </td>
@@ -131,7 +133,9 @@
                                             <div class="w-max">
                                                 <div
                                                     class="relative grid items-center px-2 py-1 font-sans text-xs font-bold text-orange-900 uppercase rounded-md select-none whitespace-nowrap bg-orange-500/20">
-                                                    <span class="">{{$jugador->updated_at}}</span>
+                                                    <span class="">
+                                                        {{ \Carbon\Carbon::parse($jugador->updated_at)->setTimezone('America/Guatemala')->format('d/m/Y H:i:s') }}
+                                                    </span>
                                                 </div>
                                             </div>
                                         </td>
@@ -142,7 +146,7 @@
                                                     class="relative px-4 py-3 select-none mx-1 rounded-lg text-center align-middle font-sans text-sm font-medium uppercase bg-slate-700 text-white transition-all hover:bg-slate-700/80 active:bg-slate-700/80"
                                                     type="button">Editar</a>
 
-                                                    <form action="{{ route('jugadores.destroy', $jugador->id) }}" method="POST" class="formEliminar">
+                                                <form action="{{ route('jugadores.destroy', $jugador->id) }}" method="POST" class="formEliminar">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Equipo extends Model
 {
     public function jugadores(){
-        return $this->hasMany(Jugador::class, 'id');
+        return $this->hasMany(Jugador::class, 'equipo_id');
     }
 
     protected $fillable = ['nombre', 'imagen'];

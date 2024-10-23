@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Equipo;
 use Illuminate\Http\Request;
 
-
 class EquipoController extends Controller
 {
     /**
@@ -30,13 +29,17 @@ class EquipoController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nombre' => 'required', 
-            'imagen' => 'required|image|mimes:jpeg,png,svg,jpg|max:1024'
-        ]);
+        $campos = [
+            'nombre' => 'required|string|unique:equipos|max:50',
+            'imagen' => 'required|image|mimes:jpeg,png,jpg|max:1024'
+        ];
 
-        // dd($request->all());
+        $mensaje=[
+            'required' => 'El :attribute es requerido',
+            'imagen.required' => 'la imagen es requerida'
+        ];
 
+        $request->validate($campos, $mensaje);
 
         $equipo = $request->all();
 
@@ -46,7 +49,7 @@ class EquipoController extends Controller
             $imagen->move(public_path($rutaGuardarImg), $imagenEquipo);
             $equipo['imagen'] = $imagenEquipo;
         }
-        
+            
         Equipo::create($equipo);
         return redirect()->route('equipos.index');
     }
@@ -72,9 +75,15 @@ class EquipoController extends Controller
      */
     public function update(Request $request, Equipo $equipo)
     {
-        $request->validate([
-            'nombre' => 'required'
-        ]);
+        $campos = [
+            'nombre' => 'required|string|max:50|unique:equipos,nombre,' . $equipo->id,
+        ];
+
+        $mensaje=[
+            'required' => 'El :attribute es requerido',
+        ];
+
+        $request->validate($campos, $mensaje);
 
         $equ = $request->all();
 
@@ -95,6 +104,12 @@ class EquipoController extends Controller
      */
     public function destroy(Equipo $equipo)
     {
+        if($equipo->imagen){
+            $rutaImagen = public_path('imagen/') . $equipo->imagen;
+            if(file_exists($rutaImagen)){
+                unlink($rutaImagen);
+            }
+        }
         $equipo->delete();
         return redirect()->route('equipos.index');
     }
