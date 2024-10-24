@@ -12,9 +12,7 @@ class Jugador extends Model
     }
 
     public function jornadas(){
-        return $this->belongsToMany(Jornada::class, 'jornada_jugador');
-
-        // return $this->hasMany(JornadaJugador::class, 'jugador_id');
+        return $this->belongsToMany(Jornada::class, 'jornada_jugador')->withPivot('puntos_obtenidos', 'tipo_tiro');
     }
 
     protected $fillable = ['nombre', 'apellido', 'fecha_nac', 'imagen', 'equipo_id'];

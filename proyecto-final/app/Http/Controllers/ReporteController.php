@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Equipo;
 use App\Models\Jugador;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReporteController extends Controller
 {
@@ -62,8 +63,18 @@ class ReporteController extends Controller
 
     public function maximosAnotadores()
     {
-        return view('reportes.maximosAnotadores');
+        // Consulta para obtener los jugadores con sus puntos totales y detalles de jornadas y tipos de tiro
+        $jugadores = Jugador::with(['jornadas' => function ($query) {
+            $query->select('jornadas.id', 'jornadas.nombre')
+                ->withPivot('puntos_obtenidos', 'tipo_tiro');
+        }])
+            ->select('jugadores.*', DB::raw('(SELECT SUM(jornada_jugador.puntos_obtenidos) FROM jornada_jugador WHERE jornada_jugador.jugador_id = jugadores.id) as total_puntos'))
+            ->orderByDesc('total_puntos') // Ordenamos por la suma de puntos
+            ->paginate(5);
+
+        return view('reportes.maximosAnotadores', compact('jugadores'));
     }
+
 
 
 
