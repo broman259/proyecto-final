@@ -30,9 +30,15 @@ class JornadaController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nombre' => 'required', 
-        ]);
+        $campos = [
+            'nombre' => 'required|string|max:50',
+        ];
+
+        $mensaje=[
+            'required' => 'El :attribute es requerido',
+        ];
+
+        $request->validate($campos, $mensaje);
 
         // dd($request->all());
 
@@ -63,9 +69,15 @@ class JornadaController extends Controller
      */
     public function update(Request $request, Jornada $jornada)
     {
-        $request->validate([
-            'nombre' => 'required'
-        ]);
+        $campos = [
+            'nombre' => 'required|string|max:50',
+        ];
+
+        $mensaje=[
+            'required' => 'El :attribute es requerido',
+        ];
+
+        $request->validate($campos, $mensaje);
 
         $jor = $request->all();
         $jornada->update($jor);

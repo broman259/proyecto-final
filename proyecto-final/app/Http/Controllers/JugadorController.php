@@ -31,13 +31,21 @@ class JugadorController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nombre' => 'required',
-            'apellido' => 'required',
-            'fecha_nac' => 'required',
-            'imagen' => 'required|image|mimes:jpeg,png,svg,jpg|max:1024',
+        $campos = [
+            'nombre' => 'required|string|max:50',
+            'apellido' => 'required|string|max:50',
+            'fecha_nac' => 'required|date',
+            'imagen' => 'required|image|mimes:jpeg,png,jpg|max:1024',
             'equipo_id' => 'required|exists:equipos,id'
-        ]);
+        ];
+
+        $mensaje=[
+            'required' => 'El :attribute es requerido',
+            'imagen.required' => 'la imagen es requerida',
+            'fecha_nac.required' => 'la fecha es requerida',
+        ];
+
+        $request->validate($campos, $mensaje);
 
         $jugador = $request->all();
 
@@ -50,13 +58,6 @@ class JugadorController extends Controller
 
         Jugador::create($jugador);
         return redirect()->route('jugadores.index');
-    
-        // $jugador = new Jugador();
-        // $jugador->nombre = $request->input('nombre');
-        // $jugador->equipo_id = $request->input('equipo_id'); // Asignar el equipo al jugador
-        // $jugador->save();
-        // return redirect()->route('jugadores.index')->with('success', 'Jugador registrado con éxito');
-
     }
 
     /**
@@ -87,6 +88,18 @@ class JugadorController extends Controller
             'apellido' => 'required',
             'fecha_nac' => 'required'
         ]);
+
+        $campos = [
+            'nombre' => 'required|string|max:50',
+            'apellido' => 'required|string|max:50',
+            'fecha_nac' => 'required|date',
+        ];
+
+        $mensaje=[
+            'required' => 'El :attribute es requerido',
+        ];
+
+        $request->validate($campos, $mensaje);
 
         $jug = $request->all();
 

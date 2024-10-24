@@ -33,14 +33,18 @@ class JornadaJugadorController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $campos = [
             'jornada_id' => 'required|exists:jornadas,id',
             'jugador_id' => 'required|exists:jugadores,id',
             'puntos_obtenidos' => 'required',
             'tipo_tiro' => 'required'
-        ],[
-            'puntos_obtenidos.required' => 'El punteo no debe quedar vacio.'
-        ]);
+        ];
+
+        $mensaje=[
+            'required' => 'El :attribute es requerido',
+        ];
+
+        $request->validate($campos, $mensaje);
 
         $tipoAccion = $request->input('tipo_tiro');
         $otro_tipo = $request->input('otro_tipo');
@@ -87,6 +91,17 @@ class JornadaJugadorController extends Controller
         ],[
             'puntos_obtenidos.required' => 'El punteo no debe quedar vacio.'
         ]);
+
+        $campos = [
+            'puntos_obtenidos' => 'required',
+            'tipo_tiro' => 'required'
+        ];
+
+        $mensaje=[
+            'required' => 'El :attribute es requerido',
+        ];
+
+        $request->validate($campos, $mensaje);
 
         $tipoAccion = $request->input('tipo_tiro');
         $otro_tipo = $request->input('otro_tipo');

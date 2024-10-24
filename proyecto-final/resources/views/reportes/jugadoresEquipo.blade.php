@@ -18,6 +18,11 @@
                                     <p class="text-slate-500">Agrupados por Equipo y Ordenados por Apellido</p>
                                 </div>
                                 <div class="flex flex-row gap-2 shrink-0">
+                                <button id="exportButton"
+                                        class="rounded border border-slate-500 py-2.5 px-3 text-center text-sm font-semibold text-slate-600 transition-all focus:ring focus:ring-slate-900 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                        type="button">
+                                        Exportar Jugadores
+                                    </button>
                                     <!-- Filtro por nombre de jugador o equipo -->
                                     <input type="text" id="filterInput" placeholder="Buscar equipo o jugador..." class="px-4 py-0 mr-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500">
 
@@ -160,5 +165,11 @@
                 row.style.display = 'none';
             }
         });
+    });
+</script>
+
+<script>
+    document.getElementById('exportButton').addEventListener('click', function() {
+        window.location.href = "{{ url('/export-jugadores') }}";
     });
 </script>

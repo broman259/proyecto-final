@@ -17,6 +17,13 @@
                                     <h3 class="text-lg font-semibold text-slate-800">Reporte General de Máximos Anotadores</h3>
                                     <p class="text-slate-500">Todas las Jornadas</p>
                                 </div>
+                                <div class="flex flex-row gap-2 shrink-0">
+                                <button id="exportButton"
+                                        class="rounded border border-slate-500 py-2.5 px-3 text-center text-sm font-semibold text-slate-600 transition-all focus:ring focus:ring-slate-900 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                        type="button">
+                                        Exportar Maximos Anotadores
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
@@ -143,4 +150,10 @@
             element.classList.add('hidden');
         }
     }
+</script>
+
+<script>
+    document.getElementById('exportButton').addEventListener('click', function() {
+        window.location.href = "{{ url('/export-maximos-anotadores') }}";
+    });
 </script>
